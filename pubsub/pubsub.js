@@ -8,9 +8,15 @@ module.exports = {
   },
   subscribe(event, callback) {
     // method to subscribe to an update
+    let index;
     if(!subscribers[event]){
       subscribers[event] = [];
     }
-    subscribers[event].push(callback);
+    index = subscribers[event].push(callback) - 1;
+    return {
+      unsubscribe(){
+        subscribers[event].splice(index, 1);
+      }
+    };
   }
 };
